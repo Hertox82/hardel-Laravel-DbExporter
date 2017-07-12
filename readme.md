@@ -30,7 +30,7 @@ $ php composer.phar update
 
 
 or via command line:
-```php
+```bash
 $ composer require hadeluca/db-exporter
 
 ```
