@@ -9,6 +9,7 @@
 namespace Hardel\Exporter;
 
 
+use Hardel\Exporter\Commands\AllActionCommand;
 use Hardel\Exporter\Commands\MigrationsCommand;
 use Hardel\Exporter\Commands\SeedCommand;
 use Hardel\Exporter\Migrator\MySqlMigrator;
@@ -53,10 +54,13 @@ class DBExporterServiceProvider extends ServiceProvider
         $this->app->bind('dbexp::migration',function($app){
             return new MigrationsCommand($app['exp']);
         });
-
+        $this->app->bind('dbexp::all',function($app){
+            return new AllActionCommand($app['exp']);
+        });
         $this->commands([
-           'dbexp::seed',
-           'dbexp::migration'
+            'dbexp::seed',
+            'dbexp::migration',
+            'dbexp::all'
         ]);
     }
 

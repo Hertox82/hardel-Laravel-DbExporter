@@ -3,21 +3,20 @@
  * Created by PhpStorm.
  * User: hernan
  * Date: 12/07/2017
- * Time: 16:57
+ * Time: 17:32
  */
 
 namespace Hardel\Exporter\Commands;
-
 
 use Hardel\Exporter\AbstractAction;
 use Illuminate\Console\Command;
 use Hardel\Exporter\ExporterManager;
 
-class MigrationsCommand extends Command
+class AllActionCommand extends Command
 {
-    protected $signature = 'dbexp:migration {database} {--ignore=}';
+    protected $signature = 'dbexp:all {database} {--ignore=}';
 
-    protected $description = 'export your table structur from database to a migration';
+    protected $description = 'export all structure and data in a migration and seed class';
 
     /**
      * @var ExporterManager
@@ -37,9 +36,9 @@ class MigrationsCommand extends Command
 
         // Display some helpfull info
         if (empty($database)) {
-            $this->comment("Preparing the migrations for database: {$this->expManager->getDatabaseName()}");
+            $this->comment("Preparing the migrations and seed for database: {$this->expManager->getDatabaseName()}");
         } else {
-            $this->comment("Preparing the migrations for database {$database}");
+            $this->comment("Preparing the migrations and seed for database {$database}");
         }
 
         // Grab the options
@@ -55,7 +54,16 @@ class MigrationsCommand extends Command
                 $this->comment("Ignoring the {$table} table");
             }
         }
+
+        $filename = $this->getFilename();
         $this->info('Success!');
         $this->info('Database migrations generated in: ' . $this->expManager->getMigrationsFilePath());
+        $this->info("Database seed class generated in: {$filename}");
+    }
+
+    private function getFilename()
+    {
+        $filename = Str::camel($this->expManager->getDatabaseName()) . "TableSeeder";
+        return config('dbexporter.exportPath.seeds')."{$filename}.php";
     }
 }
