@@ -1,0 +1,63 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: hernan
+ * Date: 12/07/2017
+ * Time: 16:37
+ */
+
+namespace Hardel\Exporter\Commands;
+
+
+use Hardel\Exporter\AbstractAction;
+use Hardel\Exporter\ExporterManager;
+use Illuminate\Console\Command;
+use Illuminate\Support\Str;
+
+class SeedCommand extends Command
+{
+    protected $signature = 'dbexp:seed {database} {--ignore=}';
+
+    protected $description = 'export your data from database to a seed class';
+
+    /**
+     * @var ExporterManager
+     */
+    protected $expManager;
+
+    public function __construct(ExporterManager $manager)
+    {
+        parent::__construct();
+
+        $this->expManager = $manager;
+    }
+
+    public function handle()
+    {
+        $this->comment("Preparing the seeder class for database {$this->expManager->getDatabaseName()}");
+
+        // Grab the options
+        $ignore = $this->option('ignore');
+
+        if (empty($ignore)) {
+            $this->expManager->seed();
+        } else {
+            $tables = explode(',', str_replace(' ', '', $ignore));
+            $this->expManager->ignore($tables)->seed();
+            foreach (AbstractAction::$ignore as $table) {
+                $this->comment("Ignoring the {$table} table");
+            }
+        }
+
+        $filename = $this->getFilename();
+
+        $this->info('Success!');
+        $this->info("Database seed class generated in: {$filename}");
+    }
+
+    private function getFilename()
+    {
+        $filename = Str::camel($this->expManager->getDatabaseName()) . "TableSeeder";
+        return config('dbexporter.exportPath.seeds')."{$filename}.php";
+    }
+}
