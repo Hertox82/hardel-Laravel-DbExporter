@@ -49,7 +49,7 @@ class AllActionCommand extends Command
         } else {
             $tables = explode(',', str_replace(' ', '', $ignore));
 
-            $this->expManager->ignore($tables)->migrate($this->argument('database'));
+            $this->expManager->ignore($tables)->migrateAndSeed($this->argument('database'));
             foreach (AbstractAction::$ignore as $table) {
                 $this->comment("Ignoring the {$table} table");
             }
