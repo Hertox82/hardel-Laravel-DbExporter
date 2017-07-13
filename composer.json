@@ -4,10 +4,11 @@
     "keywords":["Export","PHP","Database","Migrations","Laravel","Seed","Command","Artisan"],
     "type": "library",
     "require": {
-	"php": ">=7.0",
-        "illuminate/support": "^5.5@dev",
-        "illuminate/database": "^5.5@dev",
-        "illuminate/console": "^5.5@dev"
+    	"nesbot/carbon": "~1.20",
+        "symfony/console": "~3.2",
+        "ext-mbstring": "*",
+        "doctrine/inflector": "~1.0",
+        "paragonie/random_compat": "~1.4|~2.0"
     },
     "license": "MIT",
     "authors": [
@@ -21,5 +22,13 @@
             "Hardel\\": "src/"
         }
     },
-    "minimum-stability": "dev"
+    "replace":{
+    	"illuminate/console": "self.version",
+        "illuminate/container": "self.version",
+		"illuminate/contracts": "self.version",
+		"illuminate/support": "self.version",
+		"illuminate/database": "self.version"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
