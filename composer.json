@@ -4,8 +4,9 @@
     "keywords":["Export","PHP","Database","Migrations","Laravel","Seed","Command","Artisan"],
     "type": "library",
     "require": {
-        "illuminate/database": "^5.4",
-        "illuminate/support": "^5.4",
+	"php": ">=7.0",
+        "illuminate/support": "^5.5@dev",
+        "illuminate/database": "^5.5@dev",
         "illuminate/console": "^5.5@dev"
     },
     "license": "MIT",

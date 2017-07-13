@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6fcd6d379e1e5662c40126573d781210",
+    "content-hash": "731554144cd853d2a181a92b1272014f",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -79,12 +79,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/console.git",
-                "reference": "f40065b347a2aa8ddb1902a6342c54ba92198745"
+                "reference": "e79d9bfce80c1cec5a92a9393f460a2d66c02a8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/console/zipball/f40065b347a2aa8ddb1902a6342c54ba92198745",
-                "reference": "f40065b347a2aa8ddb1902a6342c54ba92198745",
+                "url": "https://api.github.com/repos/illuminate/console/zipball/e79d9bfce80c1cec5a92a9393f460a2d66c02a8e",
+                "reference": "e79d9bfce80c1cec5a92a9393f460a2d66c02a8e",
                 "shasum": ""
             },
             "require": {
@@ -121,7 +121,7 @@
             ],
             "description": "The Illuminate Console package.",
             "homepage": "https://laravel.com",
-            "time": "2017-07-11 18:26:05"
+            "time": "2017-07-13 01:38:25"
         },
         {
             "name": "illuminate/container",
@@ -732,6 +732,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "illuminate/support": 20,
+        "illuminate/database": 20,
         "illuminate/console": 20
     },
     "prefer-stable": false,
