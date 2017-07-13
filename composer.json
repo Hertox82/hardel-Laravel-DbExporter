@@ -29,5 +29,5 @@
 		"illuminate/support": "self.version",
 		"illuminate/database": "self.version"
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "dev"
 }
