@@ -15,7 +15,7 @@ use Hardel\Exporter\ExporterManager;
 
 class MigrationsCommand extends Command
 {
-    protected $signature = 'dbexp:migration {database} {--ignore=}';
+    protected $signature = 'dbexp:migration {database?} {--ignore=}';
 
     protected $description = 'export your table structur from database to a migration';
 

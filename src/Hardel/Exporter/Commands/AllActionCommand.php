@@ -14,7 +14,7 @@ use Hardel\Exporter\ExporterManager;
 
 class AllActionCommand extends Command
 {
-    protected $signature = 'dbexp:all {database} {--ignore=}';
+    protected $signature = 'dbexp:all {database?} {--ignore=}';
 
     protected $description = 'export all structure and data in a migration and seed class';
 

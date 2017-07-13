@@ -11,6 +11,7 @@ namespace Hardel\Exporter\Migrator;
 
 use Hardel\Exporter\Action\MySqlAction;
 use File;
+use Illuminate\Support\Str;
 
 class MySqlMigrator extends MySqlAction
 {

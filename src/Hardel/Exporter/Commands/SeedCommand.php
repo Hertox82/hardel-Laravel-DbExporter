@@ -16,7 +16,7 @@ use Illuminate\Support\Str;
 
 class SeedCommand extends Command
 {
-    protected $signature = 'dbexp:seed {database} {--ignore=}';
+    protected $signature = 'dbexp:seed {database?} {--ignore=}';
 
     protected $description = 'export your data from database to a seed class';
 
