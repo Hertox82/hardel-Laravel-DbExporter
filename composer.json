@@ -30,5 +30,4 @@
 		"illuminate/database": "self.version"
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
 }
