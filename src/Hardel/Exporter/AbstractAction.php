@@ -27,7 +27,7 @@ abstract class AbstractAction
     /**
      * @var
      */
-    public static $filePath;
+    public $filePath;
 
     /**
      * @var string name of Database

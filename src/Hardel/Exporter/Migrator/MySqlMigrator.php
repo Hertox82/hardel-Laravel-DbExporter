@@ -18,7 +18,6 @@ class MySqlMigrator extends MySqlAction
 
     protected $customDb = false;
 
-    public static $filePath;
 
     /**
      * Write the prepared migration to a file
@@ -33,11 +32,11 @@ class MySqlMigrator extends MySqlAction
 
         $schema = $this->compile();
         $filename = date('Y_m_d_His') . "_create_" . $this->database . "_database.php";
-        self::$filePath = config('dbexporter.export_path.migrations')."{$filename}";
+        $this->filePath = config('dbexporter.exportPath.migrations')."{$filename}";
 
-        file_put_contents(self::$filePath, $schema);
+        file_put_contents($this->filePath, $schema);
 
-        return self::$filePath;
+        return $this->filePath;
     }
 
     /**

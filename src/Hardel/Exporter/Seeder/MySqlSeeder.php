@@ -51,7 +51,7 @@ class MySqlSeeder extends MySqlAction
 
         $filename = Str::camel($this->database) . "TableSeeder";
 
-        File::put(config('dbexporter.export_path.seeds')."{$filename}.php", $seed);
+        File::put(config('dbexporter.exportPath.seeds')."{$filename}.php", $seed);
         //file_put_contents();
     }
 
@@ -117,7 +117,7 @@ class MySqlSeeder extends MySqlAction
     protected function compile()
     {
         // Grab the template
-        $template = File::get(__DIR__ . '/templates/seed.txt');
+        $template = File::get(__DIR__ . '/../stubs/seed.txt');
 
         // Replace the classname
         $template = str_replace('{{className}}', Str::camel($this->database) . "TableSeeder", $template);
