@@ -4,6 +4,7 @@
     "keywords":["Export","PHP","Database","Migrations","Laravel","Seed","Command","Artisan"],
     "type": "library",
     "require": {
+	"php": ">=7.0",
         "illuminate/database": "^5.4",
         "illuminate/support": "^5.4",
         "illuminate/console": "^5.5@dev"
