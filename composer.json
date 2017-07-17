@@ -23,17 +23,12 @@
             "Hardel\\": "src/"
         }
     },
-    "autoload-dev":{
-        "psr-4":{
-            "Test\\":"tests/"
-        }
-    },
     "replace":{
     	"illuminate/console": "self.version",
         "illuminate/container": "self.version",
 		"illuminate/contracts": "self.version",
 		"illuminate/support": "self.version",
-		"illuminate/database": "self.version",
+		"illuminate/database": "self.version"
     },
     "extra":{
         "branch-alias":{
