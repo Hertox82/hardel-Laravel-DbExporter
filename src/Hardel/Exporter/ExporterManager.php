@@ -10,6 +10,7 @@ namespace Hardel\Exporter;
 
 use Hardel\Exporter\DriverExporter\DriverExporter;
 use Illuminate\Container\Container;
+use Closure;
 
 class ExporterManager
 {
@@ -39,28 +40,51 @@ class ExporterManager
 
         $this->factory = $factory;
 
-        $this->exporter = $this->factory->make($this->getConfigDefault());
+        $this->exporter = $this->registerExporter();
     }
 
 
+    private function registerExporter()
+    {
+        $connType = $this->app['config']['database.default'];
+        $key = 'customAction.custom.'.$connType;
+        if(isset($this->app['config'][$key]))
+        {
+            $closure = $this->app['config'][$key];
+            return $this->factory->make($this->getConfigDefault(),$closure);
+        }
+        else
+        {
+            return $this->factory->make($this->getConfigDefault());
+        }
+    }
+
     /**
      * @param null $database
+     * @param null $custom
      * @return $this
      */
-    public function migrate($database = null)
+    public function migrate($database = null,$custom = null)
     {
-        $this->exporter->migrator()->convert($database)->write();
+        if(is_null($custom))
+            $this->exporter->migrator()->convert($database)->write();
+        else
+            $this->exporter->migrationCustom($custom)->convert($database)->write();
 
         return $this;
     }
 
     /**
      * @param null $database
+     * @param null $custom
      * @return $this
      */
-    public function seed($database = null)
+    public function seed($database = null,$custom = null)
     {
-        $this->exporter->seeder()->convert($database)->write();
+        if(is_null($custom))
+            $this->exporter->seeder()->convert($database)->write();
+        else
+            $this->exporter->seederCustom($custom)->convert($database)->write();
 
         return $this;
     }
@@ -90,7 +114,7 @@ class ExporterManager
     /**
      * @return mixed
      */
-    protected function getConfigDefault()
+    public function getConfigDefault()
     {
         return $this->app['config']['database.default'];
     }

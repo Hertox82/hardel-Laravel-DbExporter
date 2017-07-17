@@ -12,23 +12,11 @@ use Hardel\Exporter\AbstractAction;
 use Illuminate\Console\Command;
 use Hardel\Exporter\ExporterManager;
 
-class AllActionCommand extends Command
+class AllActionCommand extends ExporterCommand
 {
     protected $signature = 'dbexp:all {database?} {--ignore=}';
 
     protected $description = 'export all structure and data in a migration and seed class';
-
-    /**
-     * @var ExporterManager
-     */
-    protected $expManager;
-
-    public function __construct(ExporterManager $manager)
-    {
-        parent::__construct();
-
-        $this->expManager = $manager;
-    }
 
     public function handle()
     {
@@ -61,9 +49,5 @@ class AllActionCommand extends Command
         $this->info("Database seed class generated in: {$filename}");
     }
 
-    private function getFilename()
-    {
-        $filename = Str::camel($this->expManager->getDatabaseName()) . "TableSeeder";
-        return config('dbexporter.exportPath.seeds')."{$filename}.php";
-    }
+
 }

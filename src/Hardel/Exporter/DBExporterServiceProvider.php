@@ -26,9 +26,13 @@ class DBExporterServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $this->publishes([__DIR__.'/../../config/config.php' => config_path('dbexporter.php')]);
+        $this->publishes([
+            __DIR__.'/../../config/config.php' => config_path('dbexporter.php'),
+                __DIR__.'/../../config/customAction.php' => config_path('customAction.php')
+            ]);
 
         $this->mergeConfigFrom(__DIR__.'/../../config/config.php','dbexporter');
+        $this->mergeConfigFrom(__DIR__.'/../../config/customAction.php','customAction');
     }
 
     public function register()

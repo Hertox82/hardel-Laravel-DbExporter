@@ -14,6 +14,7 @@ use Hardel\Exporter\DriverExporter\PostgresExporter;
 use Hardel\Exporter\DriverExporter\SQLiteExporter;
 use Hardel\Exporter\DriverExporter\SqlServerExporter;
 use Illuminate\Container\Container;
+use Closure;
 
 class ExporterFactory{
 
@@ -30,21 +31,32 @@ class ExporterFactory{
 
     /**
      * @param $driver
+     * @param Closure $callback
      * @return MySqlExporter|PostgresExporter|SQLiteExporter|SqlServerExporter
      */
-    public function make($driver)
+    public function make($driver,Closure $callback = null)
     {
+        $exporter = null;
         switch ($driver)
         {
             case 'mysql':
-                return new MySqlExporter($this->container['exp.mysql.migrator'],$this->container['exp.mysql.seeder']);
+                 $exporter = new MySqlExporter($this->container['exp.mysql.migrator'],$this->container['exp.mysql.seeder']);
+                 break;
             case 'pgsql':
-                return new PostgresExporter($this->container['exp.pgsql.migrator'],$this->container['exp.pgsql.seeder']);
+                $exporter =  new PostgresExporter($this->container['exp.pgsql.migrator'],$this->container['exp.pgsql.seeder']);
+                break;
             case 'sqlite':
-                return new SQLiteExporter($this->container['exp.sqlite.migrator'],$this->container['exp.sqlite.seeder']);
+                $exporter =  new SQLiteExporter($this->container['exp.sqlite.migrator'],$this->container['exp.sqlite.seeder']);
+                break;
             case 'sqlsrv':
-                return new SqlServerExporter($this->container['exp.sqlsrv.migrator'],$this->container['exp.sqlsrv.seeder']);
+                $exporter = new SqlServerExporter($this->container['exp.sqlsrv.migrator'],$this->container['exp.sqlsrv.seeder']);
+                break;
         }
+
+        if($callback != null)
+            $exporter = $callback($exporter);
+
+        return $exporter;
     }
 
 }

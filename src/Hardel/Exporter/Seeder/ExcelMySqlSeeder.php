@@ -2,29 +2,18 @@
 /**
  * Created by PhpStorm.
  * User: hernan
- * Date: 12/07/2017
- * Time: 15:42
+ * Date: 17/07/2017
+ * Time: 09:38
  */
+
 
 namespace Hardel\Exporter\Seeder;
 
 
 use Hardel\Exporter\Action\MySqlAction;
-use Illuminate\Support\Str;
-use File;
 
-class MySqlSeeder extends MySqlAction
+class ExcelMySqlSeeder extends MySqlAction
 {
-    /**
-     * @var String
-     */
-    protected $seedingStub;
-
-    /**
-     * @var bool
-     */
-    protected $customDb = false;
-
 
     /**
      * Write the seed file

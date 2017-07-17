@@ -13,23 +13,12 @@ use Hardel\Exporter\AbstractAction;
 use Illuminate\Console\Command;
 use Hardel\Exporter\ExporterManager;
 
-class MigrationsCommand extends Command
+class MigrationsCommand extends ExporterCommand
 {
     protected $signature = 'dbexp:migration {database?} {--ignore=}';
 
     protected $description = 'export your table structur from database to a migration';
 
-    /**
-     * @var ExporterManager
-     */
-    protected $expManager;
-
-    public function __construct(ExporterManager $manager)
-    {
-        parent::__construct();
-
-        $this->expManager = $manager;
-    }
 
     public function handle()
     {

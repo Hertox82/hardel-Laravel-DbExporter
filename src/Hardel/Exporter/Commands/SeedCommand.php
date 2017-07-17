@@ -14,23 +14,11 @@ use Hardel\Exporter\ExporterManager;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 
-class SeedCommand extends Command
+class SeedCommand extends ExporterCommand
 {
     protected $signature = 'dbexp:seed {database?} {--ignore=}';
 
     protected $description = 'export your data from database to a seed class';
-
-    /**
-     * @var ExporterManager
-     */
-    protected $expManager;
-
-    public function __construct(ExporterManager $manager)
-    {
-        parent::__construct();
-
-        $this->expManager = $manager;
-    }
 
     public function handle()
     {
@@ -53,11 +41,5 @@ class SeedCommand extends Command
 
         $this->info('Success!');
         $this->info("Database seed class generated in: {$filename}");
-    }
-
-    private function getFilename()
-    {
-        $filename = Str::camel($this->expManager->getDatabaseName()) . "TableSeeder";
-        return config('dbexporter.exportPath.seeds')."{$filename}.php";
     }
 }
