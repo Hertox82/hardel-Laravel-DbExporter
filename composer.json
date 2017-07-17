@@ -34,15 +34,11 @@
 		"illuminate/contracts": "self.version",
 		"illuminate/support": "self.version",
 		"illuminate/database": "self.version",
-        "illuminate/config":"self.version"
     },
     "extra":{
         "branch-alias":{
             "dev-master":"1.0.x-dev"
         }
     },
-    "minimum-stability": "dev",
-    "require-dev": {
-        "phpunit/phpunit": "^6.3@dev"
-    }
+    "minimum-stability": "dev"
 }
