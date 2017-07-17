@@ -47,7 +47,7 @@ class ExporterManager
     private function registerExporter()
     {
         $connType = $this->app['config']['database.default'];
-        $key = 'customAction.custom.'.$connType;
+        $key = 'customAction.customs.'.$connType;
         if(isset($this->app['config'][$key]))
         {
             $closure = $this->app['config'][$key];

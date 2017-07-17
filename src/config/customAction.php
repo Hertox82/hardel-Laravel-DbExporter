@@ -9,7 +9,8 @@
 return [
     'customs'    => [
         'mysql' => function($action){
-                    $action->register('excel',new \Hardel\Exporter\Seeder\ExcelMySqlSeeder($this->app['config']['database.connections.mysql.database']));
+                    $action->registerSeeder('excel',new \Hardel\Exporter\Seeder\ExcelMySqlSeeder($this->app['config']['database.connections.mysql.database']));
+                    return $action;
                 },
         ]
     ];

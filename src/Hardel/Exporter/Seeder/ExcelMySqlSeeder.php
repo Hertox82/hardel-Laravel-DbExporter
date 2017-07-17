@@ -14,7 +14,6 @@ use Hardel\Exporter\Action\MySqlAction;
 
 class ExcelMySqlSeeder extends MySqlAction
 {
-
     /**
      * Write the seed file
      */
@@ -26,11 +25,7 @@ class ExcelMySqlSeeder extends MySqlAction
             $this->convert();
         }
 
-        $seed = $this->compile();
-
-        $filename = Str::camel($this->database) . "TableSeeder";
-
-        File::put(config('dbexporter.exportPath.seeds')."{$filename}.php", $seed);
+        pr('roma merda');
         //file_put_contents();
     }
 
@@ -48,7 +43,6 @@ class ExcelMySqlSeeder extends MySqlAction
 
         // Get the tables for the database
         $tables = $this->getTables();
-        $stub = "";
         // Loop over the tables
         foreach ($tables as $key => $value) {
             // Do not export the ignored tables
@@ -58,33 +52,15 @@ class ExcelMySqlSeeder extends MySqlAction
             $tableName = $value['table_name'];
             $tableData = $this->getTableData($value['table_name']);
             $tableDescribes = $this->getTableDescribes($value['table_name']);
-            $insertStub = "";
 
             foreach ($tableData as $obj) {
-                $insertStub .= "
-            [\n";
-                foreach ($obj as $prop => $value) {
-                    $insertStub .= $this->insertPropertyAndValue($prop, $value,$this->getDataType($tableDescribes,$prop));
-                }
-
-                if (count($tableData) > 1) {
-                    $insertStub .= "            ],\n";
-                } else {
-                    $insertStub .= "            ]\n";
-                }
+                pr($obj,1);
             }
-
-
 
             if ($this->hasTableData($tableData)) {
-                $stub .= "
-        DB::table('" . $tableName . "')->insert([
-            {$insertStub}
-        ]);";
+
             }
         }
-
-        $this->seedingStub = $stub;
 
         return $this;
     }
@@ -95,59 +71,9 @@ class ExcelMySqlSeeder extends MySqlAction
      */
     protected function compile()
     {
-        // Grab the template
-        $template = File::get(__DIR__ . '/../stubs/seed.txt');
-
-        // Replace the classname
-        $template = str_replace('{{className}}', Str::camel($this->database) . "TableSeeder", $template);
-        $template = str_replace('{{run}}', $this->seedingStub, $template);
-
-        return $template;
+        //da fare
     }
 
-    private function insertPropertyAndValue($prop, $value,$dataType)
-    {
-        $prop = addslashes($prop);
-        if(strpos('\\',$value) === false)
-        {
-
-            $value = addslashes($value);
-        }
-        $stringa = '';
-
-        if($prop == 'codiceEAN');
-        switch ($dataType)
-        {
-            case 'int' :
-            case 'smallint':
-            case 'bigint' :
-            case 'float' :
-            case 'double' :
-            case 'decimal' :
-            case 'tinyint' :
-                $stringa = "                '{$prop}' => {$value},\n";
-                break;
-            case 'char' :
-            case 'varchar' :
-            case 'date' :
-            case 'timestamp' :
-            case 'datetime' :
-            case 'longtext' :
-            case 'mediumtext' :
-            case 'text' :
-            case 'longblob':
-            case 'blob' :
-            case 'enum' :
-                $stringa = "                '{$prop}' => '{$value}',\n";
-                break;
-        }
-        if (strlen($value) == 0 or is_null($value)) {
-            return "                '{$prop}' => NULL,\n";
-        } else{
-            return $stringa;
-        }
-
-    }
 
     /**
      * @param $tableData
@@ -156,16 +82,5 @@ class ExcelMySqlSeeder extends MySqlAction
     public function hasTableData($tableData)
     {
         return count($tableData) >= 1;
-    }
-
-    private function getDataType(&$list, $prop)
-    {
-        foreach ($list as $Data)
-        {
-            if($Data->Field == $prop)
-            {
-                return $Data->Data_Type;
-            }
-        }
     }
 }
