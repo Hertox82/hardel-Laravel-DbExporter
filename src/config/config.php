@@ -1,4 +1,7 @@
 <?php
+/**
+ * @author hernan ariel de luca
+ */
 return [
     'exportPath' => [
         'migrations' => base_path().'/database/migrations/',
