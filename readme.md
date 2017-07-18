@@ -45,7 +45,7 @@ Add the service provider to `app/config/app.php`:
 (Optional) Publish the configuration file.
 
 ```
-php artisan vendor:publish hadeluca/db-exporter
+$ php artisan vendor:publish hadeluca/db-exporter
 ```
 
 *Use `dev-master` as version requirement to be on the cutting edge*
@@ -60,13 +60,13 @@ php artisan vendor:publish hadeluca/db-exporter
 **Basic usage**
 
 ```
-php artisan dbexp:migration
+$ php artisan dbexp:migration
 ```
 
 **Specify a database**
 
 ```
-php artisan dbexp:migration databaseName
+$ php artisan dbexp:migration databaseName
 ```
 
 **Ignoring tables**
@@ -74,20 +74,20 @@ php artisan dbexp:migration databaseName
 You can ignore multiple tables by seperating them with a comma.
 
 ```
-php artisan dbexp:migration --ignore="table1,table2"
+$ php artisan dbexp:migration --ignore="table1,table2"
 ```
 
 #### Export database table data to seed class
 This command will export all your database table data into a seed class.
 
 ```
-php artisan dbexp:seed
+$ php artisan dbexp:seed
 ```
 
 Also here you can ignore multiple tables:
 
 ```
-php artisan dbexp:seed --ignore="table1,table2"
+$ php artisan dbexp:seed --ignore="table1,table2"
 ```
 
 
@@ -111,7 +111,7 @@ Now you can run from the commmand line:
 #### Chaining
 You can also combine the generation of the migrations & the seed:
 
-```php
+```bash
 
 $ php artisan dbexp:all [databaseName] [--ignore="table1,table2"]
 
@@ -125,7 +125,7 @@ By default the migrations table is ignored.
 
 Now you can export all data in excel file from the command line
 
-```php
+```bash
 
 $ php artisan dbexp:excel-data [databaseName] [path] [--ignore="table1,table2"]
 
@@ -146,10 +146,8 @@ return [
 
 also you can override this path passing path to the commmand line
 
-```php
-
+```bash
 $ php artisan dbexp:excel-data null ~.Desktop.excelFolder [--ignore="table1,table2"]
-
 ```
 
 automatically you can find in ~/Desktop/excelFolder/database.xlsx
