@@ -11,12 +11,12 @@ This package is a restructuring of the existing [nWidart/DbExporter](https://git
 
 Add `"hadeluca/db-exporter"`* as a requirement to `composer.json`:
 
-```php
+```bash
 {
     ...
     "require": {
         ...
-		"hadeluca/db-exporter": "1.0"
+		"hadeluca/db-exporter": "^1.0"
     },
 }
 
@@ -121,8 +121,43 @@ $ php artisan dbexp:all [databaseName] [--ignore="table1,table2"]
 By default the migrations table is ignored.
 
 
+###Export all data in .xlsx (Excel)
+
+Now you can export all data in excel file from the command line
+
+```php
+
+$ php artisan dbexp:excel-data [databaseName] [path] [--ignore="table1,table2"]
+
+```
+
+by default (in config.php) you can find the path where the library store the database.xlsx 
+
+```php
+<?php
+return [
+    'excel' => [
+                'seed' => base_path().'/database/export/excel/seeds/',
+                'migrations' => base_path().'/database/export/excel/migration/'
+            ]
+];
+
+```
+
+also you can override this path passing path to the commmand line
+
+```php
+
+$ php artisan dbexp:excel-data null ~.Desktop.excelFolder [--ignore="table1,table2"]
+
+```
+
+automatically you can find in ~/Desktop/excelFolder/database.xlsx
+
+
 
 ## TODO
+* ~~Create export data in excel from MySQL~~
 * Create Postgres Migrator and Seeder
 * Create SQLite Migrator and Seeder
 * Create SqlServer Migrator and Seeder
