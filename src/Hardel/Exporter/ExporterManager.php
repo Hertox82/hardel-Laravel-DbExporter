@@ -67,9 +67,15 @@ class ExporterManager
     {
         if(is_null($custom))
             $this->exporter->migrator()->convert($database)->write();
-        else
-            $this->exporter->migrationCustom($custom)->convert($database)->write();
-
+        else {
+            $exporter = $this->exporter->migrationCustom($custom);
+            if(isset($this->app['config']['dbexporter.exportPath.'.$custom.'.migration']))
+            {
+                if($exporter->isEmptyStorePath())
+                    $exporter = $exporter->setStorePath($this->app['config']['dbexporter.exportPath.' . $custom.'.migration']);
+            }
+            $exporter->convert($database)->write();
+        }
         return $this;
     }
 
@@ -82,8 +88,16 @@ class ExporterManager
     {
         if(is_null($custom))
             $this->exporter->seeder()->convert($database)->write();
-        else
-            $this->exporter->seederCustom($custom)->convert($database)->write();
+        else {
+
+            $exporter = $this->exporter->seederCustom($custom);
+            if(isset($this->app['config']['dbexporter.exportPath.'.$custom.'.seed'])) {
+                if($exporter->isEmptyStorePath())
+                    $exporter = $exporter->setStorePath($this->app['config']['dbexporter.exportPath.' . $custom.'.seed']);
+            }
+            $exporter->convert($database)->write();
+
+        }
 
         return $this;
     }
@@ -95,6 +109,36 @@ class ExporterManager
     public function migrateAndSeed($database = null)
     {
         $this->migrate($database)->seed($database);
+
+        return $this;
+    }
+
+    /**
+     * @param $path
+     * @param $custom null
+     * @return $this
+     */
+    public function setSeederPath($path,$custom = null)
+    {
+        if(is_null($custom))
+            $this->exporter->seeder()->setStorePath($path);
+        else
+            $this->exporter->seederCustom($custom)->setStorePath($path);
+
+        return $this;
+    }
+
+    /**
+     * @param $path
+     * @param null $custom
+     * @return $this
+     */
+    public function setMigratorPath($path,$custom = null)
+    {
+        if(is_null($custom))
+            $this->exporter->migrator()->setStorePath($path);
+        else
+            $this->exporter->seederCustom($custom)->setStorePath($path);
 
         return $this;
     }

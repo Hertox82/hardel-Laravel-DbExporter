@@ -34,6 +34,11 @@ abstract class AbstractAction
     protected $database;
 
     /**
+     * @var $storePath -path to store file
+     */
+    protected  $storePath = '';
+
+    /**
      * AbstractAction constructor.
      * @param $database
      * @throws InvalidDatabaseException
@@ -66,4 +71,16 @@ abstract class AbstractAction
      * @return mixed
      */
     abstract protected function compile();
+
+    public function setStorePath($path)
+    {
+        $this->storePath=$path;
+
+        return $this;
+    }
+
+    public function isEmptyStorePath()
+    {
+        return (strlen($this->storePath) == 0);
+    }
 }

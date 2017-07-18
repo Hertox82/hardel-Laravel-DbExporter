@@ -10,12 +10,16 @@ namespace Hardel\Exporter\Seeder;
 
 
 use Hardel\Exporter\Action\MySqlAction;
+use Excel;
 
 class ExcelMySqlSeeder extends MySqlAction
 {
     /**
      * Write the seed file
      */
+
+    protected $listOfTables = [];
+
     public function write()
     {
         // Check if convert method was called before
@@ -24,8 +28,9 @@ class ExcelMySqlSeeder extends MySqlAction
             $this->convert();
         }
 
-        pr('roma merda');
-        //file_put_contents();
+        $this->compile();
+
+
     }
 
     /**
@@ -51,14 +56,16 @@ class ExcelMySqlSeeder extends MySqlAction
             $tableName = $value['table_name'];
             $tableData = $this->getTableData($value['table_name']);
             $tableDescribes = $this->getTableDescribes($value['table_name']);
-
             foreach ($tableData as $obj) {
-                pr($obj,1);
+                $data = [];
+                foreach ($tableDescribes as $field)
+                {
+                    $nameField = $field->Field;
+                    $data[$nameField] = $obj->$nameField;
+                }
+                $this->listOfTables[$tableName][] = $data;
             }
 
-            if ($this->hasTableData($tableData)) {
-
-            }
         }
 
         return $this;
@@ -70,7 +77,16 @@ class ExcelMySqlSeeder extends MySqlAction
      */
     protected function compile()
     {
-        //da fare
+        $lista = $this->listOfTables;
+            Excel::create('database',function($excel)use($lista){
+                foreach ($lista as $key => $dataList)
+                {
+                    $excel->sheet($key,function($sheet)use($dataList){
+
+                        $sheet->fromArray($dataList);
+                    });
+                }
+            })->store('xlsx',$this->storePath);
     }
 
 
