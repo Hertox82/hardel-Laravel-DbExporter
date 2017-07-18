@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e3a839ce78c278e4113c67e8002616c4",
+    "content-hash": "540a3c73ac6a0ebc374bc31290237941",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -126,71 +126,6 @@
                 "instantiate"
             ],
             "time": "2017-02-16 16:15:51"
-        },
-        {
-            "name": "maatwebsite/excel",
-            "version": "3.0.x-dev",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Maatwebsite/Laravel-Excel.git",
-                "reference": "a69b97acbc5dd799d4ddb608c2a982b8f7e0afcf"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Excel/zipball/a69b97acbc5dd799d4ddb608c2a982b8f7e0afcf",
-                "reference": "a69b97acbc5dd799d4ddb608c2a982b8f7e0afcf",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.0",
-                "phpoffice/phpspreadsheet": "dev-develop"
-            },
-            "require-dev": {
-                "codeclimate/php-test-reporter": "^0.4.4",
-                "illuminate/filesystem": "5.*",
-                "illuminate/support": "5.*",
-                "phpunit/phpunit": "~6.2"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Maatwebsite\\Excel\\Bridge\\Laravel\\ExcelServiceProvider"
-                    ],
-                    "aliases": {
-                        "Excel": "Maatwebsite\\Excel\\Bridge\\Laravel\\Facades\\Excel"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Maatwebsite\\Excel\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL"
-            ],
-            "authors": [
-                {
-                    "name": "Maatwebsite.nl",
-                    "email": "patrick@maatwebsite.nl"
-                }
-            ],
-            "description": "An eloquent way of importing and exporting Excel and CSV",
-            "keywords": [
-                "PHPExcel",
-                "batch",
-                "csv",
-                "excel",
-                "export",
-                "import",
-                "laravel",
-                "php",
-                "phpspreadsheet",
-                "spout"
-            ],
-            "time": "2017-06-25 22:01:51"
         },
         {
             "name": "myclabs/deep-copy",
@@ -2032,9 +1967,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "maatwebsite/excel": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
