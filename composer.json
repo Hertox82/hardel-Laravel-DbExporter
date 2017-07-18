@@ -2,13 +2,18 @@
     "name": "hadeluca/db-exporter",
     "description": "this is a package for Laravel Framework to export, via command line, Database in Migration and all data in a Seed",
     "keywords":["Export","PHP","Database","Migrations","Laravel","Seed","Command","Artisan"],
-    "type": "library",
     "require": {
     	"nesbot/carbon": "~1.20",
         "symfony/console": "~3.2",
         "ext-mbstring": "*",
         "doctrine/inflector": "~1.0",
-        "paragonie/random_compat": "~1.4|~2.0"
+        "paragonie/random_compat": "~1.4|~2.0",
+        "illuminate/support": "5.4.27",
+        "illuminate/console": "5.4.27",
+        "illuminate/container": "5.4.27",
+        "illuminate/contracts": "5.4.27",
+        "illuminate/database": "5.4.27",
+        "maatwebsite/excel": "2.1.19"
     },
     "license": "MIT",
     "authors": [
@@ -21,13 +26,6 @@
         "psr-4": {
             "Hardel\\": "src/"
         }
-    },
-    "replace":{
-    	"illuminate/console": "self.version",
-        "illuminate/container": "self.version",
-		"illuminate/contracts": "self.version",
-		"illuminate/support": "self.version",
-		"illuminate/database": "self.version"
     },
     "minimum-stability": "dev",
     "prefer-stable":true
