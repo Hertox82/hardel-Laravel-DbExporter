@@ -20,6 +20,8 @@ class ExcelMySqlSeeder extends MySqlAction
 
     protected $listOfTables = [];
 
+    protected $customDb = false;
+
     public function write()
     {
         // Check if convert method was called before
@@ -29,7 +31,6 @@ class ExcelMySqlSeeder extends MySqlAction
         }
 
         $this->compile();
-
 
     }
 
@@ -42,8 +43,9 @@ class ExcelMySqlSeeder extends MySqlAction
     {
         if (!is_null($database)) {
             $this->database = $database;
-            $this->customDb = true;
+
         }
+        $this->customDb = true;
 
         // Get the tables for the database
         $tables = $this->getTables();
