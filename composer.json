@@ -8,12 +8,12 @@
         "ext-mbstring": "*",
         "doctrine/inflector": "~1.0",
         "paragonie/random_compat": "~1.4|~2.0",
-        "illuminate/support": "5.4.27",
-        "illuminate/console": "5.4.27",
-        "illuminate/container": "5.4.27",
-        "illuminate/contracts": "5.4.27",
-        "illuminate/database": "5.4.27",
-        "maatwebsite/excel": "2.1.19"
+        "illuminate/support": "5.4.*|5.5.*",
+        "illuminate/console": "5.4.*|5.5.*",
+        "illuminate/container": "5.4.*|5.5.*",
+        "illuminate/contracts": "5.4.*|5.5.*",
+        "illuminate/database": "5.4.*|5.5.*",
+        "maatwebsite/excel": "2.1.28"
     },
     "license": "MIT",
     "authors": [
@@ -27,6 +27,6 @@
             "Hardel\\": "src/"
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable":true
 }
