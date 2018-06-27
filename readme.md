@@ -7,6 +7,11 @@ This can be done via artisan commands or a controller action.
 This package is a restructuring of the existing [nWidart/DbExporter](https://github.com/nWidart/DbExporter) library 
 
 
+
+| Hardel Exporter | Laravel Supported version | MaatWebsite |
+| :-------------: |:-------------------------:| :---------: |
+|      ^2.0       |        5.4.+, 5.5.+       |    2.1.28   |
+
 ## Installation
 
 Add `"hadeluca/db-exporter"`* as a requirement to `composer.json`:
@@ -16,7 +21,7 @@ Add `"hadeluca/db-exporter"`* as a requirement to `composer.json`:
     ...
     "require": {
         ...
-		"hadeluca/db-exporter": "^1.0"
+		"hadeluca/db-exporter": "^2.0"
     },
 }
 
