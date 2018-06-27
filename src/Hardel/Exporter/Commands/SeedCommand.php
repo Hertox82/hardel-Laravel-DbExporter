@@ -12,7 +12,7 @@ use Hardel\Exporter\AbstractAction;
 
 class SeedCommand extends ExporterCommand
 {
-    protected $signature = 'dbexp:seed {database?} {--ignore=}';
+    protected $signature = 'dbexp:seed {database?} {--ignore=} {--select=}';
 
     protected $description = 'export your data from database to a seed class';
 
@@ -21,15 +21,23 @@ class SeedCommand extends ExporterCommand
         $this->comment("Preparing the seeder class for database {$this->expManager->getDatabaseName()}");
 
         // Grab the options
+        $database = $this->argument('database');
+
         $ignore = $this->option('ignore');
 
-        if (empty($ignore)) {
-            $this->expManager->seed();
+        $selected = $this->option('select');
+
+        if (empty($ignore) and empty($selected)) {
+            $this->expManager->migrate($database);
         } else {
-            $tables = explode(',', str_replace(' ', '', $ignore));
-            $this->expManager->ignore($tables)->seed();
-            foreach (AbstractAction::$ignore as $table) {
-                $this->comment("Ignoring the {$table} table");
+            if(!empty($ignore) and empty($selected)) {
+                $this->makeAction(compact('ignore'),"seed",$this->argument('database'));
+            }
+            else if(empty($ignore) and !empty($selected)) {
+                $this->makeAction(compact('selected'),'seed',$this->argument('database'));
+            }
+            else {
+                $this->error("it is not possible pass selected table and ignored table together");
             }
         }
 

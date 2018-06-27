@@ -104,11 +104,12 @@ class ExporterManager
 
     /**
      * @param null $database
+     * @param null $custom
      * @return $this
      */
-    public function migrateAndSeed($database = null)
+    public function migrateAndSeed($database = null, $custom = null)
     {
-        $this->migrate($database)->seed($database);
+        $this->migrate($database,$custom)->seed($database,$custom);
 
         return $this;
     }
@@ -150,6 +151,13 @@ class ExporterManager
     public function ignore($table)
     {
         $this->exporter->ignore($table);
+
+        return $this;
+    }
+
+    public function selected($table)
+    {
+        $this->exporter->selected($table);
 
         return $this;
     }

@@ -10,7 +10,7 @@ namespace Hardel\Exporter\Commands;
 
 class ExportExcelDataCommand extends ExporterCommand
 {
-    protected $signature = 'dbexp:excel-data {database?} {--path=} {--ignore=}';
+    protected $signature = 'dbexp:excel-data {database?} {--path=} {--ignore=} {--select=}';
 
     protected $description = 'export your data from database to a excel file';
 
@@ -25,6 +25,8 @@ class ExportExcelDataCommand extends ExporterCommand
 
         $path = $this->option('path');
 
+        $selected = $this->option('select');
+
         $expManager = $this->expManager;
 
         if(!empty($path))
@@ -35,13 +37,16 @@ class ExportExcelDataCommand extends ExporterCommand
             $expManager = $expManager->setSeederPath($this->path,'excel');
         }
 
-        if (empty($ignore)) {
+        if (empty($ignore) and empty($selected)) {
             $expManager->seed(null,'excel');
         } else {
-            $tables = explode(',', str_replace(' ', '', $ignore));
-            $expManager->ignore($tables)->seed(null,'excel');
-            foreach (AbstractAction::$ignore as $table) {
-                $this->comment("Ignoring the {$table} table");
+            if(!empty($ignore) and empty($selected)) {
+             $this->makeAction(compact('ignore'),'seed',null,'excel');
+            } else if (empty($ignore) and !empty($selected)) {
+             $this->makeAction(compact('selected'),'seed',null,'excel');
+            }
+            else {
+                $this->error("it is not possible pass selected table and ignored table together");
             }
         }
 

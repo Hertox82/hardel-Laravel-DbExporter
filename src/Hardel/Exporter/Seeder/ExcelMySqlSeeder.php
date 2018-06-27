@@ -34,6 +34,22 @@ class ExcelMySqlSeeder extends MySqlAction
 
     }
 
+    protected function createExcelSeederStub($table) {
+
+        $tableName = $table;
+        $tableData = $this->getTableData($table);
+        $tableDescribes = $this->getTableDescribes($table);
+        foreach ($tableData as $obj) {
+            $data = [];
+            foreach ($tableDescribes as $field)
+            {
+                $nameField = $field->Field;
+                $data[$nameField] = $obj->$nameField;
+            }
+            $this->listOfTables[$tableName][] = $data;
+        }
+    }
+
     /**
      * Convert the database tables to something usefull
      * @param null $database
@@ -55,17 +71,15 @@ class ExcelMySqlSeeder extends MySqlAction
             if (in_array($value['table_name'], self::$ignore)) {
                 continue;
             }
-            $tableName = $value['table_name'];
-            $tableData = $this->getTableData($value['table_name']);
-            $tableDescribes = $this->getTableDescribes($value['table_name']);
-            foreach ($tableData as $obj) {
-                $data = [];
-                foreach ($tableDescribes as $field)
-                {
-                    $nameField = $field->Field;
-                    $data[$nameField] = $obj->$nameField;
+
+            if(count(self::$selected)> 0) {
+                if(in_array($value['table_name'],self::$selected)) {
+
+                    $this->createExcelSeederStub($value['table_name']);
                 }
-                $this->listOfTables[$tableName][] = $data;
+            }
+            else {
+                $this->createExcelSeederStub($value['table_name']);
             }
 
         }
