@@ -32,7 +32,7 @@ class AllActionCommand extends ExporterCommand
         $ignore = $this->option('ignore');
 
         if (empty($ignore)) {
-            $this->expManager->migrate($database);
+            $this->expManager->migrateAndSeed($database);
         } else {
             $tables = explode(',', str_replace(' ', '', $ignore));
 
