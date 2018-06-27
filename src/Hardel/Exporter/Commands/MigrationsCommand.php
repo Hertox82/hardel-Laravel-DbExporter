@@ -9,8 +9,6 @@ namespace Hardel\Exporter\Commands;
 
 
 use Hardel\Exporter\AbstractAction;
-use Illuminate\Console\Command;
-use Hardel\Exporter\ExporterManager;
 
 class MigrationsCommand extends ExporterCommand
 {

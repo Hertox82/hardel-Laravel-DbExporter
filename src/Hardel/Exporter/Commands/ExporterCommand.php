@@ -10,6 +10,7 @@ namespace Hardel\Exporter\Commands;
 
 use Illuminate\Console\Command;
 use Hardel\Exporter\ExporterManager;
+use Illuminate\Support\Str;
 
 class ExporterCommand extends Command
 {
