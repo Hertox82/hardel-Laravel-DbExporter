@@ -45,6 +45,41 @@ class MySqlSeeder extends MySqlAction
     }
 
     /**
+     * This function create seeder stub
+     * @param $table
+     * @param $stub
+     */
+    protected function createSeederStub($table,&$stub) {
+        $tableName = $table;
+        $tableData = $this->getTableData($table);
+        $tableDescribes = $this->getTableDescribes($table);
+        $insertStub = "";
+
+        foreach ($tableData as $obj) {
+            $insertStub .= "
+            [\n";
+            foreach ($obj as $prop => $value) {
+                $insertStub .= $this->insertPropertyAndValue($prop, $value,$this->getDataType($tableDescribes,$prop));
+            }
+
+            if (count($tableData) > 1) {
+                $insertStub .= "            ],\n";
+            } else {
+                $insertStub .= "            ]\n";
+            }
+        }
+
+
+
+        if ($this->hasTableData($tableData)) {
+            $stub .= "
+        DB::table('" . $tableName . "')->insert([
+            {$insertStub}
+        ]);";
+        }
+    }
+
+    /**
      * Convert the database tables to something usefull
      * @param null $database
      * @return $this
@@ -65,33 +100,17 @@ class MySqlSeeder extends MySqlAction
             if (in_array($value['table_name'], self::$ignore)) {
                 continue;
             }
-            $tableName = $value['table_name'];
-            $tableData = $this->getTableData($value['table_name']);
-            $tableDescribes = $this->getTableDescribes($value['table_name']);
-            $insertStub = "";
 
-            foreach ($tableData as $obj) {
-                $insertStub .= "
-            [\n";
-                foreach ($obj as $prop => $value) {
-                    $insertStub .= $this->insertPropertyAndValue($prop, $value,$this->getDataType($tableDescribes,$prop));
-                }
-
-                if (count($tableData) > 1) {
-                    $insertStub .= "            ],\n";
-                } else {
-                    $insertStub .= "            ]\n";
+            //check if exists table selected
+            if(count(self::$selected)>0) {
+                if(in_array($value['table_name'], self::$selected)) {
+                    $this->createSeederStub($value['table_name'],$stub);
                 }
             }
-
-
-
-            if ($this->hasTableData($tableData)) {
-                $stub .= "
-        DB::table('" . $tableName . "')->insert([
-            {$insertStub}
-        ]);";
+            else {
+                $this->createSeederStub($value['table_name'],$stub);
             }
+
         }
 
         $this->seedingStub = $stub;

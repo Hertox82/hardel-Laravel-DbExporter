@@ -39,9 +39,109 @@ class MySqlMigrator extends MySqlAction
         return $this->filePath;
     }
 
+    protected function createStubMigration($table) {
+
+        $down = "Schema::drop('{$table}');";
+        $up = "Schema::create('{$table}', function($" . "table) {\n";
+
+        $tableDescribes = $this->getTableDescribes($table);
+        // Loop over the tables fields
+        foreach ($tableDescribes as $values) {
+            $method = "";
+            $para = strpos($values->Type, '(');
+            $type = $para > -1 ? substr($values->Type, 0, $para) : $values->Type;
+            $numbers = "";
+            $nullable = $values->Null == "NO" ? "" : "->nullable()";
+            $default = empty($values->Default) ? "" : "->default(\"{$values->Default}\")";
+            $unsigned = strpos($values->Type, "unsigned") === false ? '' : '->unsigned()';
+
+            switch ($type) {
+                case 'int' :
+                    $method = 'integer';
+                    break;
+                case 'smallint' :
+                    $method = 'smallInteger';
+                    break;
+                case 'bigint' :
+                    $method = 'bigInteger';
+                    break;
+                case 'char' :
+                case 'varchar' :
+                    $para = strpos($values->Type, '(');
+                    $numbers = ", " . substr($values->Type, $para + 1, -1);
+                    $method = 'string';
+                    break;
+                case 'float' :
+                    $method = 'float';
+                    break;
+                case 'double' :
+                    $para = strpos($values->Type, '('); # 6
+                    $numbers = ", " . substr($values->Type, $para + 1, -1);
+                    $method = 'double';
+                    break;
+                case 'decimal' :
+                    $para = strpos($values->Type, '(');
+                    $numbers = ", " . substr($values->Type, $para + 1, -1);
+                    $method = 'decimal';
+                    break;
+                case 'tinyint' :
+                    $method = 'boolean';
+                    break;
+                case 'date' :
+                    $method = 'date';
+                    break;
+                case 'timestamp' :
+                    $method = 'timestamp';
+                    break;
+                case 'datetime' :
+                    $method = 'dateTime';
+                    break;
+                case 'longtext' :
+                    $method = 'longText';
+                    break;
+                case 'mediumtext' :
+                    $method = 'mediumText';
+                    break;
+                case 'text' :
+                    $method = 'text';
+                    break;
+                case 'longblob':
+                case 'blob' :
+                    $method = 'binary';
+                    break;
+                case 'enum' :
+                    $method = 'enum';
+                    $para = strpos($values->Type, '('); # 4
+                    $options = substr($values->Type, $para + 1, -1);
+                    $numbers = ', array(' . $options . ')';
+                    break;
+            }
+
+            if ($values->Key == 'PRI') {
+                $method = 'increments';
+            }
+
+            $up .= "                $" . "table->{$method}('{$values->Field}'{$numbers}){$nullable}{$default}{$unsigned};\n";
+        }
+
+        $tableIndexes = $this->getTableIndexes($table);
+        if (!is_null($tableIndexes) && count($tableIndexes)){
+            foreach ($tableIndexes as $index) {
+                $up .= '                $' . "table->index('" . $index['Key_name'] . "');\n";
+            }
+        }
+
+        $up .= "            });\n\n";
+
+        $this->schema[$table] = array(
+            'up'   => $up,
+            'down' => $down
+        );
+    }
+
     /**
      * Convert the database to migrations
-     * If none is given, use de DB from condig/database.php
+     * If none is given, use de DB from config/database.php
      * @param null $database
      * @return $this
      */
@@ -61,102 +161,14 @@ class MySqlMigrator extends MySqlAction
                 continue;
             }
 
-            $down = "Schema::drop('{$value['table_name']}');";
-            $up = "Schema::create('{$value['table_name']}', function($" . "table) {\n";
-
-            $tableDescribes = $this->getTableDescribes($value['table_name']);
-            // Loop over the tables fields
-            foreach ($tableDescribes as $values) {
-                $method = "";
-                $para = strpos($values->Type, '(');
-                $type = $para > -1 ? substr($values->Type, 0, $para) : $values->Type;
-                $numbers = "";
-                $nullable = $values->Null == "NO" ? "" : "->nullable()";
-                $default = empty($values->Default) ? "" : "->default(\"{$values->Default}\")";
-                $unsigned = strpos($values->Type, "unsigned") === false ? '' : '->unsigned()';
-
-                switch ($type) {
-                    case 'int' :
-                        $method = 'integer';
-                        break;
-                    case 'smallint' :
-                        $method = 'smallInteger';
-                        break;
-                    case 'bigint' :
-                        $method = 'bigInteger';
-                        break;
-                    case 'char' :
-                    case 'varchar' :
-                        $para = strpos($values->Type, '(');
-                        $numbers = ", " . substr($values->Type, $para + 1, -1);
-                        $method = 'string';
-                        break;
-                    case 'float' :
-                        $method = 'float';
-                        break;
-                    case 'double' :
-                        $para = strpos($values->Type, '('); # 6
-                        $numbers = ", " . substr($values->Type, $para + 1, -1);
-                        $method = 'double';
-                        break;
-                    case 'decimal' :
-                        $para = strpos($values->Type, '(');
-                        $numbers = ", " . substr($values->Type, $para + 1, -1);
-                        $method = 'decimal';
-                        break;
-                    case 'tinyint' :
-                        $method = 'boolean';
-                        break;
-                    case 'date' :
-                        $method = 'date';
-                        break;
-                    case 'timestamp' :
-                        $method = 'timestamp';
-                        break;
-                    case 'datetime' :
-                        $method = 'dateTime';
-                        break;
-                    case 'longtext' :
-                        $method = 'longText';
-                        break;
-                    case 'mediumtext' :
-                        $method = 'mediumText';
-                        break;
-                    case 'text' :
-                        $method = 'text';
-                        break;
-                    case 'longblob':
-                    case 'blob' :
-                        $method = 'binary';
-                        break;
-                    case 'enum' :
-                        $method = 'enum';
-                        $para = strpos($values->Type, '('); # 4
-                        $options = substr($values->Type, $para + 1, -1);
-                        $numbers = ', array(' . $options . ')';
-                        break;
-                }
-
-                if ($values->Key == 'PRI') {
-                    $method = 'increments';
-                }
-
-                $up .= "                $" . "table->{$method}('{$values->Field}'{$numbers}){$nullable}{$default}{$unsigned};\n";
-            }
-
-            $tableIndexes = $this->getTableIndexes($value['table_name']);
-            if (!is_null($tableIndexes) && count($tableIndexes)){
-                foreach ($tableIndexes as $index) {
-                    $up .= '                $' . "table->index('" . $index['Key_name'] . "');\n";
+            if(count(self::$selected) > 0) {
+                if(in_array($value['table_name'],self::$selected)) {
+                    $this->createStubMigration($value['table_name']);
                 }
             }
-
-            $up .= "            });\n\n";
-
-            $this->schema[$value['table_name']] = array(
-                'up'   => $up,
-                'down' => $down
-            );
+            else {
+               $this->createStubMigration($value['table_name']);
+            }
         }
 
         return $this;

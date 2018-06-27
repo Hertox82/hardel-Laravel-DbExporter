@@ -7,13 +7,12 @@
 
 namespace Hardel\Exporter\Commands;
 
-use Hardel\Exporter\AbstractAction;
 use Illuminate\Console\Command;
 use Hardel\Exporter\ExporterManager;
 
 class AllActionCommand extends ExporterCommand
 {
-    protected $signature = 'dbexp:all {database?} {--ignore=}';
+    protected $signature = 'dbexp:all {database?} {--ignore=} {--select=}';
 
     protected $description = 'export all structure and data in a migration and seed class';
 
@@ -31,14 +30,18 @@ class AllActionCommand extends ExporterCommand
         // Grab the options
         $ignore = $this->option('ignore');
 
-        if (empty($ignore)) {
+        $selected = $this->option('select');
+
+        if (empty($ignore) and empty($selected)) {
             $this->expManager->migrateAndSeed($database);
         } else {
-            $tables = explode(',', str_replace(' ', '', $ignore));
-
-            $this->expManager->ignore($tables)->migrateAndSeed($this->argument('database'));
-            foreach (AbstractAction::$ignore as $table) {
-                $this->comment("Ignoring the {$table} table");
+            if(!empty($ignore) and empty($selected)) {
+               $this->makeAction(compact('ignore'),'migrateAndSeed');
+            } else if(empty($ignore) and !empty($selected)) {
+               $this->makeAction(compact('selected'), 'migrateAndSeed');
+            }
+            else {
+                $this->error("it is not possible pass selected table and ignored table together");
             }
         }
 
@@ -47,6 +50,5 @@ class AllActionCommand extends ExporterCommand
         $this->info('Database migrations generated in: ' . $this->expManager->getMigrationsFilePath());
         $this->info("Database seed class generated in: {$filename}");
     }
-
 
 }

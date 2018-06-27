@@ -56,6 +56,17 @@ abstract class DriverExporter
     }
 
     /**
+     * @param $tables
+     * @return $this
+     */
+    public function selected($tables)
+    {
+        AbstractAction::$selected = (array)$tables;
+
+        return $this;
+    }
+
+    /**
      * @return AbstractAction migrator
      */
     public function migrator()

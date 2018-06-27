@@ -26,6 +26,11 @@ abstract class AbstractAction
     /**
      * @var
      */
+    public static $selected = [];
+
+    /**
+     * @var
+     */
     public $filePath;
 
     /**
