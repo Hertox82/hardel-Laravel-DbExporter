@@ -12,6 +12,9 @@ This package is a restructuring of the existing [nWidart/DbExporter](https://git
 | :-------------: |:-------------------------:| :---------: |
 |      ^2.0       |        5.4.+, 5.5.+       |    2.1.28   |
 
+
+PS: When you update the library, please remember to re-publish vendor!
+
 ## Installation
 
 Add `"hadeluca/db-exporter"`* as a requirement to `composer.json`:
