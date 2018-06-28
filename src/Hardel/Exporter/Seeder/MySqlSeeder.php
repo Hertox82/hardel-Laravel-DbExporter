@@ -128,6 +128,8 @@ class MySqlSeeder extends MySqlAction
         $template = File::get(__DIR__ . '/../stubs/seed.txt');
 
         // Replace the classname
+        $template = str_replace('{{namespace}}',config('dbexporter.exportPath.seeder.namespace'),$template);
+        $template = str_replace('{{useClass}}',implode("\n",config('dbexporter.exportPath.seeder.useClasses')),$template);
         $template = str_replace('{{className}}', Str::camel($this->database) . "TableSeeder", $template);
         $template = str_replace('{{run}}', $this->seedingStub, $template);
 
