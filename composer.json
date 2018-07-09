@@ -24,7 +24,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Hardel\\": "src/"
+            "Hardel\\": "src/Hardel/"
         }
     },
     "prefer-stable":true
