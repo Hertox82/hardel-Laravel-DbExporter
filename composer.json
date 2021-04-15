@@ -8,12 +8,12 @@
         "ext-mbstring": "*",
         "doctrine/inflector": "~1.1",
         "paragonie/random_compat": "v9.99.99",
-        "illuminate/support": "5.5.*|5.6.*",
-        "illuminate/console": "5.5.*|5.6.*",
-        "illuminate/container": "5.5.*|5.6.*",
-        "illuminate/contracts": "5.5.*|5.6.*",
-        "illuminate/database": "5.5.*|5.6.*",
-        "maatwebsite/excel": "2.1.28"
+        "illuminate/support": "^5.5",
+        "illuminate/console": "^5.5",
+        "illuminate/container": "^5.5",
+        "illuminate/contracts": "^5.5",
+        "illuminate/database": "^5.5",
+        "maatwebsite/excel": "3.0.10"
     },
     "license": "MIT",
     "authors": [
