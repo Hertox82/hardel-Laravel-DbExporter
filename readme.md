@@ -25,7 +25,7 @@ Add `"hadeluca/db-exporter"`* as a requirement to `composer.json`:
     ...
     "require": {
         ...
-		"hadeluca/db-exporter": "^2.0"
+		"hadeluca/db-exporter": "^2.1"
     },
 }
 
