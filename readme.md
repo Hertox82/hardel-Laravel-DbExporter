@@ -12,7 +12,7 @@ This package is a restructuring of the existing [nWidart/DbExporter](https://git
 | :-------------: |:-------------------------:| :---------: |
 |      2.0.*      |   5.4.+, 5.5.+            |    2.1.28   |
 |      2.1.*      |   5.5.+, 5.6.+            |    2.1.28   |
-|      2.2.*      |         >=5.5             |    3.0.10   |
+|      2.2.*      |         >=5.5             |    3.*      |
 
 
 PS: When you update the library, please remember to re-publish vendor!
