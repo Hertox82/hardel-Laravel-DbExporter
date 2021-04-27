@@ -3,7 +3,6 @@
     "description": "this is a package for Laravel Framework to export, via command line, Database in Migration and all data in a Seed",
     "keywords":["Export","PHP","Database","Migrations","Laravel","Seed","Command","Artisan"],
     "require": {
-    	"nesbot/carbon": "^1.26.3",
         "symfony/console": "~4.0",
         "ext-mbstring": "*",
         "doctrine/inflector": "~1.1",
