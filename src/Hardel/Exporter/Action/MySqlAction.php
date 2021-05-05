@@ -63,7 +63,7 @@ class MySqlAction extends AbstractAction
      * @param $table
      * @return mixed
      */
-    protected function getTableDescribes($table)
+    public function getTableDescribes($table)
     {
         return DB::table('information_schema.columns')
             ->where('table_schema', '=', $this->database)
