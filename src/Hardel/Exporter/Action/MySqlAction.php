@@ -76,7 +76,7 @@ class MySqlAction extends AbstractAction
      * @param $table
      * @return mixed
      */
-    protected function getTableData($table)
+    public function getTableData($table)
     {
         return DB::table($table)->get();
     }
