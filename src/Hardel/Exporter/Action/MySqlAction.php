@@ -46,7 +46,7 @@ class MySqlAction extends AbstractAction
      * Get all the tables
      * @return mixed
      */
-    protected function getTables()
+    public function getTables()
     {
         $pdo = DB::connection()->getPdo();
         return $pdo->query('SELECT table_name FROM information_schema.tables WHERE table_schema="' . $this->database . '"');

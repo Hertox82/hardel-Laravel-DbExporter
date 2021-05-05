@@ -26,5 +26,12 @@
             "Hardel\\": "src/Hardel/"
         }
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Hardel\\Exporter\\DBExporterServiceProvider"
+            ]
+        }
+    },
     "prefer-stable":true
 }
