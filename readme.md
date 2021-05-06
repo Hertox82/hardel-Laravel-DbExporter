@@ -15,6 +15,10 @@ This package is a restructuring of the existing [nWidart/DbExporter](https://git
 
 PS: When you update the library, please remember to re-publish vendor!
 
+## Changelog
+
+see the [Changelog](CHANGELOG.md) file *(created with version 2.3.0)*
+
 ## Installation
 
 Add `"hadeluca/db-exporter"`* as a requirement to `composer.json`:
@@ -27,7 +31,6 @@ Add `"hadeluca/db-exporter"`* as a requirement to `composer.json`:
         "hadeluca/db-exporter": "2.3.*"
     },
 }
-
 ```
 
 Update composer:
@@ -40,7 +43,6 @@ or via command line:
 
 ```bash
 composer require hadeluca/db-exporter
-
 ```
 
 Add the service provider to `app/config/app.php`:
@@ -102,9 +104,7 @@ php artisan dbexp:seed --ignore="table1,table2"
 Next all you have to do is add the call method on the base seed class in `database/seeds/DatabaseSeeder.php`:
 
 ```php
-
 $this->call('nameOfYourSeedClass');
-
 ```
 
 Now you can run from the commmand line:
@@ -142,7 +142,6 @@ return [
                 'migrations' => base_path().'/database/export/excel/migration/'
             ]
 ];
-
 ```
 
 also you can override this path passing path to the commmand line
@@ -162,7 +161,7 @@ automatically you can find in ~/Desktop/excelFolder/database.xlsx
 
 ## Credits
 
-Credits to **[@nicolaswidart](http://www.nicolaswidart.com)** for the [original package](https://github.com/nWidart/DbExporte) Which I downloaded but was not compatible with the new version of laravel 5.4 and for these reason i modified it.
+Credits to **[@nicolaswidart](http://www.nicolaswidart.com)** for the [original package](https://github.com/nWidart/DbExporte) Which I downloaded but was not compatible with the new version of laravel 5.4, 5.5, 5.6, 5.7, 5.8, 6.* and for these reason i modified it.
 
 ## License (MIT)
 
