@@ -124,7 +124,19 @@ class MySqlMigrator extends MySqlAction
             $up .= "                $" . "table->{$method}('{$values->Field}'{$numbers}){$nullable}{$default}{$unsigned};\n";
         }
 
-        $tableIndexes = $this->getTableIndexes($table);
+
+        $tableForeign = $this->getTableForeign($table);
+        $notIn = $tableForeign->map(function($c){
+            return $c->constraint_name;
+        })->all();
+        $tableIndexes = $this->getTableIndexes($table, $notIn);
+        if(!is_null($tableForeign) && count($tableForeign)) {
+            foreach ($tableForeign as $f) {
+                $up .='                $' . "table->foreign('" .$f->column_name. "', '".$f->constraint_name."')";
+                $up .="->references('" .$f->referenced_column_name. "')->on('".$f->referenced_table_name."')";
+                $up .="->onUpdate('".strtolower($f->update_rule)."')->onDelete('".strtolower($f->delete_rule)."');\n";
+            }
+        }
         if (!is_null($tableIndexes) && count($tableIndexes)){
             foreach ($tableIndexes as $index) {
                 $up .= '                $' . "table->index('" . $index['Key_name'] . "');\n";

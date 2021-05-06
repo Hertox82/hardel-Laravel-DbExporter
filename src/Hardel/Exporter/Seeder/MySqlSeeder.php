@@ -37,7 +37,6 @@ class MySqlSeeder extends MySqlAction
         }
 
         $seed = $this->compile();
-
         $filename = Str::camel($this->database) . "TableSeeder";
 
         File::put(config('dbexporter.exportPath.seeds')."{$filename}.php", $seed);
@@ -114,7 +113,7 @@ class MySqlSeeder extends MySqlAction
         }
 
         $this->seedingStub = $stub;
-
+        
         return $this;
     }
 
@@ -139,11 +138,13 @@ class MySqlSeeder extends MySqlAction
     private function insertPropertyAndValue($prop, $value,$dataType)
     {
         $prop = addslashes($prop);
-        if(strpos('\\',$value) === false)
-        {
-
-            $value = addslashes($value);
+        if((! is_int($value)) && (! is_bool($value)) && (! is_null($value))) {
+            if(strpos('\\',$value) === false)
+            {
+                $value = addslashes($value);
+            }
         }
+       
         $stringa = '';
 
         if($prop == 'codiceEAN');
