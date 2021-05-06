@@ -9,9 +9,10 @@ This package is a restructuring of the existing [nWidart/DbExporter](https://git
 
 | Hardel Exporter | Laravel Supported version | MaatWebsite |
 | :-------------: |:-------------------------:| :---------: |
-|      ^1.0       |         5.4.27            |    2.1.19   |
-|      ^2.0       |        5.4.+, 5.5.+       |    2.1.28   |
+|      ^1.+       |         5.4.27            |    2.1.19   |
 
+
+PS: please, when updated the library remember to re-publish the vendor 
 
 ## Installation
 

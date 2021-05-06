@@ -12,7 +12,7 @@ use Hardel\Exporter\AbstractAction;
 
 class MigrationsCommand extends ExporterCommand
 {
-    protected $signature = 'dbexp:migration {database?} {--ignore=}';
+    protected $signature = 'dbexp:migration {database?} {--ignore=} {--select=}';
 
     protected $description = 'export your table structur from database to a migration';
 
@@ -31,14 +31,19 @@ class MigrationsCommand extends ExporterCommand
         // Grab the options
         $ignore = $this->option('ignore');
 
-        if (empty($ignore)) {
+        $selected = $this->option('select');
+
+        if (empty($ignore) and empty($selected)) {
             $this->expManager->migrate($database);
         } else {
-            $tables = explode(',', str_replace(' ', '', $ignore));
-
-            $this->expManager->ignore($tables)->migrate($this->argument('database'));
-            foreach (AbstractAction::$ignore as $table) {
-                $this->comment("Ignoring the {$table} table");
+            if(!empty($ignore) and empty($selected)) {
+                $this->makeAction(compact('ignore'),"migrate",$this->argument('database'));
+            }
+            else if(empty($ignore) and !empty($selected)) {
+               $this->makeAction(compact('selected'),'migrate',$this->argument('database'));
+            }
+            else {
+                $this->error("it is not possible pass selected table and ignored table together");
             }
         }
         $this->info('Success!');
