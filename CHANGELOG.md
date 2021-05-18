@@ -1,5 +1,12 @@
 # CHANGE LOG
 
+## v 2.5.0 (18-05-2021)
+
+- Upgrade to Laravel ^8.40
+- Breaking changes
+  - remove support to Laravel ^7.29
+  - version 2.4.* no more mantained
+
 ## v 2.4.0 (13-05-2021)
 
 - Upgrade to Laravel ^7.29

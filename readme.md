@@ -13,6 +13,7 @@ This package is a restructuring of the existing [nWidart/DbExporter](https://git
 |      2.2.*      |   >=5.5 <=5.8.*           |    3.1.*    |
 |      2.3.*      |         ^6.20             |    3.1.*    |
 |      2.4.*      |         ^7.29             |    3.1.*    |
+|      2.5.*      |         ^8.40             |    3.1.*    |
 
 PS: When you update the library, please remember to re-publish vendor!
 
@@ -29,7 +30,7 @@ Add `"hadeluca/db-exporter"`* as a requirement to `composer.json`:
     ...
     "require": {
         ...
-        "hadeluca/db-exporter": "2.4.*"
+        "hadeluca/db-exporter": "2.5.*"
     },
 }
 ```

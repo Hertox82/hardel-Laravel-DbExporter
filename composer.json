@@ -10,7 +10,7 @@
         "illuminate/console": "^8.40",
         "illuminate/container": "^8.40",
         "illuminate/contracts": "^8.40",
-        "illuminate/database": "^8.4o",
+        "illuminate/database": "^8.40",
         "maatwebsite/excel": "~3.1"
     },
     "license": "MIT",
